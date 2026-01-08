@@ -22,4 +22,11 @@ final class AccueilController extends AbstractController
         return $this->render('accueil/mentions-legales.html.twig', [
         ]);
     }
+    
+    #[Route(['cgu'], name: 'legal_cgu')]
+    public function cgu(): Response
+    {
+        return $this->render('accueil/cgu.html.twig', [
+        ]);
+    }
 }
