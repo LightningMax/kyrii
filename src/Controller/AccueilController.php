@@ -36,4 +36,11 @@ final class AccueilController extends AbstractController
         return $this->render('accueil/politique-confidentialite.html.twig', [
         ]);
     }
+    
+    #[Route(['qui-sommes-nous'], name: 'about')]
+    public function about(): Response
+    {
+        return $this->render('accueil/qui-sommes-nous.html.twig', [
+        ]);
+    }
 }
