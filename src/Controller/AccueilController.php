@@ -29,4 +29,11 @@ final class AccueilController extends AbstractController
         return $this->render('accueil/cgu.html.twig', [
         ]);
     }
+    
+    #[Route(['politique-confidentialite'], name: 'legal_privacy')]
+    public function privacy(): Response
+    {
+        return $this->render('accueil/politique-confidentialite.html.twig', [
+        ]);
+    }
 }
