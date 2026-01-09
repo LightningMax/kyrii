@@ -9,5 +9,27 @@
     <h2 class="text-xl text-center mt-10">Plonge dans l’univers du manga</h2>
 
 </section>
+
+<section>
+<h2 class="text-xl font-semibold mt-8 mb-4 text-center">Contactez-nous</h2>
+
+{% for flash in app.flashes('success') %}
+    <div class="bg-green-100 text-green-700 px-4 py-2 rounded mb-4">
+        {{ flash }}
+    </div>
+{% endfor %}
+
+<div class="flex justify-center">
+    <div class="w-full max-w-md bg-white p-6 rounded shadow">
+        {{ form_start(contactForm) }}
+            {{ form_row(contactForm.name) }}
+            {{ form_row(contactForm.email) }}
+            {{ form_row(contactForm.message) }}
+            {{ form_row(contactForm.submit) }}
+        {{ form_end(contactForm) }}
+    </div>
+</div>
+
+</section>
 </main>
 {% endblock %}

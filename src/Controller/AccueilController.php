@@ -2,19 +2,50 @@
 
 namespace App\Controller;
 
+use App\Form\ContactFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Mime\Email;
+
 
 final class AccueilController extends AbstractController
 {
-    #[Route(['/', 'accueil'], name: 'app_accueil')]
-    public function index(): Response
+    #[Route('/', name: 'app_accueil')]
+    public function index(Request $request, MailerInterface $mailer): Response
     {
+        $form = $this->createForm(ContactFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            // Créer l'email
+            $email = (new Email())
+                ->from($data['email'])
+                ->to('kyrii@contact.com')
+                ->subject('Nouveau message du formulaire de contact')
+                ->text(
+                    "Nom: {$data['name']}\n".
+                    "Email: {$data['email']}\n".
+                    "Message:\n{$data['message']}"
+                );
+
+            $mailer->send($email);
+
+            $this->addFlash('success', 'Votre message a été envoyé !');
+            return $this->redirectToRoute('app_accueil');
+        }
+
         return $this->render('accueil/index.html.twig', [
             'controller_name' => 'AccueilController',
+            'contactForm' => $form->createView(),
         ]);
     }
+
+
     
     #[Route(['mentions-legales'], name: 'legal_mentions')]
     public function mentions(): Response
