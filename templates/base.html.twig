@@ -16,6 +16,9 @@
             <nav class="flex gap-3">
                 <a href="/">Accueil</a>
                 <a href="/login">Connexion</a>
+                {% if app.user %}
+                    <a href="{{ logout_path() }}">Logout</a>
+                {% endif %}
             </nav>
         </header>
         {% block body %}{% endblock %}

@@ -4,8 +4,32 @@
 
 {% block body %}
     {% if app.user %}
+        <h1 class="text-2xl font-bold text-center">
+            Bonjour, {{ app.user.username }} !
+        </h1>
         <div class="flex justify-center">
-            <p>You are logged in as {{ app.user.userIdentifier }}, <a href="{{ logout_path() }}">Logout</a></p>
+            <div class="bg-white p-6 rounded shadow max-w-md">
+                <h2 class="text-xl font-semibold mb-4">Mon profil</h2>
+
+                <p><strong>Pseudo :</strong> {{ app.user.username }}</p>
+                <p><strong>Email :</strong> {{ app.user.email }}</p>
+
+                <div class="mt-4 flex gap-4">
+                    <a href="{{ path('app_dashboard_edit') }}"
+                    class="text-indigo-600 font-medium">
+                        Modifier mon profil
+                    </a>
+
+                    <form method="post"
+                        action="{{ path('app_dashboard_delete') }}"
+                        onsubmit="return confirm('Supprimer votre compte ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete-user') }}">
+                        <button class="text-red-600 font-medium">
+                            Supprimer mon compte
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     {% endif %}
 {% endblock %}
