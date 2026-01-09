@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Manga index{% endblock %}
+
+{% block body %}
+    <h1>Manga index</h1>
+
+    <div class="text-center mb-6">
+        <a href="{{ path('app_manga_add_standard') }}"
+        class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
+        Ajouter les 3 mangas standards
+        </a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Image</th>
+                <th>Price</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for manga in mangas %}
+            <tr>
+                <td>{{ manga.id }}</td>
+                <td>{{ manga.title }}</td>
+                <td>{{ manga.author }}</td>
+                <td>{{ manga.image }}</td>
+                <td>{{ manga.price }}</td>
+                <td>
+                    <a href="{{ path('app_manga_show', {'id': manga.id}) }}">show</a>
+                    <a href="{{ path('app_manga_edit', {'id': manga.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_manga_new') }}">Create new</a>
+{% endblock %}

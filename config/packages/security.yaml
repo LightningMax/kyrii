@@ -44,6 +44,7 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/dashboard, roles: ROLE_USER }
+        - { path: ^/manga, roles: ROLE_USER }
 
 when@test:
     security:

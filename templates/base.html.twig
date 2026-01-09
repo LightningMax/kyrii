@@ -15,9 +15,12 @@
         <header class="flex justify-center my-10">
             <nav class="flex gap-3">
                 <a href="/">Accueil</a>
-                <a href="/login">Connexion</a>
                 {% if app.user %}
+                    <a href="/login">Profil</a>
+                    <a href="/manga">Manga</a>
                     <a href="{{ logout_path() }}">Logout</a>
+                {% else %}
+                    <a href="/login">Connexion</a>
                 {% endif %}
             </nav>
         </header>

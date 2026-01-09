@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\ContactFormType;
+use App\Repository\MangaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ use Symfony\Component\Mime\Email;
 final class AccueilController extends AbstractController
 {
     #[Route('/', name: 'app_accueil')]
-    public function index(Request $request, MailerInterface $mailer): Response
+    public function index(Request $request, MailerInterface $mailer, MangaRepository $mangaRepository): Response
     {
         $form = $this->createForm(ContactFormType::class);
         $form->handleRequest($request);
@@ -39,9 +40,12 @@ final class AccueilController extends AbstractController
             return $this->redirectToRoute('app_accueil');
         }
 
+        $mangas = $mangaRepository->findAll();        
+
         return $this->render('accueil/index.html.twig', [
             'controller_name' => 'AccueilController',
             'contactForm' => $form->createView(),
+            'mangas' => $mangas,
         ]);
     }
 
